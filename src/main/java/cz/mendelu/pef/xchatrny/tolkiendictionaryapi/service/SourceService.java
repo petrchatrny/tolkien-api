@@ -43,6 +43,7 @@ public class SourceService {
                 .id(dto.id())
                 .name(dto.name())
                 .url(dto.url())
+                .addedByAdmin(true)
                 .build();
 
         return new SourceMapper().apply(repository.save(source));
