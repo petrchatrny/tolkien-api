@@ -17,7 +17,6 @@ public abstract class SoftDeletableEntity {
     @NotNull
     protected LocalDateTime createdAt;
 
-    @NotNull
     private LocalDateTime updatedAt;
 
     protected LocalDateTime deletedAt;
