@@ -30,7 +30,7 @@ public class WordService {
 
     public Collection<WordDTO> getAllWords() {
         return repository
-                .findAll()
+                .findUndeleted()
                 .stream()
                 .map(new WordMapper())
                 .toList();

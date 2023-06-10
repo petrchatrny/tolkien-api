@@ -20,7 +20,7 @@ public class LanguageService {
 
     public Collection<LanguageDTO> getAllLanguages() {
         return repository
-                .findAll()
+                .findUndeleted()
                 .stream()
                 .map(new LanguageMapper())
                 .toList();

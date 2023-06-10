@@ -12,7 +12,8 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "words")
+@Entity
+@Table(name = "word")
 public class Word extends SoftDeletableEntity {
     @Id
     @GeneratedValue(generator = "uuid4")

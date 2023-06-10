@@ -20,7 +20,7 @@ public class SourceService {
 
     public Collection<SourceDTO> getAllSources() {
         return repository
-                .findAll()
+                .findUndeleted()
                 .stream()
                 .map(new SourceMapper())
                 .toList();
