@@ -13,6 +13,9 @@ public interface ISourceRepository extends JpaRepository<Source, UUID> {
     @Query("SELECT s FROM Source s WHERE s.deletedAt IS NULL")
     Collection<Source> findUndeleted();
 
-    @Query("SELECT s FROM Source s WHERE s.updatedAt >= :updatedAt")
-    Collection<Source> findUpdatedAtAfter(@Param("updatedAt") LocalDateTime updatedAt);
+    @Query("SELECT s FROM Source s WHERE s.createdAt > :dateTime")
+    Collection<Source> findCreatedAtAfter(@Param("dateTime") LocalDateTime dateTime);
+
+    @Query("SELECT s FROM Source s WHERE s.updatedAt > :dateTime")
+    Collection<Source> findUpdatedAtAfter(@Param("dateTime") LocalDateTime dateTime);
 }

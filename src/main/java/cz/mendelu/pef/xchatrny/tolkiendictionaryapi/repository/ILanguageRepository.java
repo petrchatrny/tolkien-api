@@ -13,6 +13,9 @@ public interface ILanguageRepository extends JpaRepository<Language, UUID> {
     @Query("SELECT l FROM Language l WHERE l.deletedAt IS NULL")
     Collection<Language> findUndeleted();
 
-    @Query("SELECT l FROM Language l WHERE l.updatedAt >= :updatedAt")
-    Collection<Language> findUpdatedAtAfter(@Param("updatedAt") LocalDateTime updatedAt);
+    @Query("SELECT l FROM Language l WHERE l.createdAt > :dateTime")
+    Collection<Language> findCreatedAtAfter(@Param("dateTime") LocalDateTime dateTime);
+
+    @Query("SELECT l FROM Language l WHERE l.updatedAt > :dateTime")
+    Collection<Language> findUpdatedAtAfter(@Param("dateTime") LocalDateTime dateTime);
 }

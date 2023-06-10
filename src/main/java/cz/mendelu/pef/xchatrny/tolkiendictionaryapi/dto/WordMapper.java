@@ -14,6 +14,6 @@ public class WordMapper implements Function<Word, WordDTO> {
             sourceId = word.getSource().getId();
         }
 
-        return new WordDTO(word.getId(), word.getCzechMeaning(), word.getTranslation(), word.getTengwar(), word.getLanguage().getId(), sourceId);
+        return new WordDTO(word.getId(), word.getCzechMeaning(), word.getTranslation(), word.getTengwar(), word.getCreatedAt(), word.getLanguage().getId(), sourceId);
     }
 }
