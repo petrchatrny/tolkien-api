@@ -1,6 +1,7 @@
 package cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto;
 
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.model.Word;
+import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.util.DateTimeUtil;
 
 import java.util.UUID;
 import java.util.function.Function;
@@ -14,6 +15,14 @@ public class WordMapper implements Function<Word, WordDTO> {
             sourceId = word.getSource().getId();
         }
 
-        return new WordDTO(word.getId(), word.getCzechMeaning(), word.getTranslation(), word.getTengwar(), word.getCreatedAt(), word.getLanguage().getId(), sourceId);
+        return new WordDTO(
+                word.getId(),
+                word.getCzechMeaning(),
+                word.getTranslation(),
+                word.getTengwar(),
+                DateTimeUtil.LocalDateTimeToUnix(word.getCreatedAt()),
+                word.getLanguage().getId(),
+                sourceId
+        );
     }
 }

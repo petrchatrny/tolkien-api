@@ -1,6 +1,5 @@
 package cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 public record WordDTO(
@@ -8,7 +7,7 @@ public record WordDTO(
         String czechMeaning,
         String translation,
         String tengwar,
-        LocalDateTime createdAt,
+        Long createdAt,
         UUID languageId,
         UUID sourceId
 ) {
