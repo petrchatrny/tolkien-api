@@ -8,6 +8,6 @@ import java.util.function.Function;
 public class LanguageMapper implements Function<Language, LanguageDTO> {
     @Override
     public LanguageDTO apply(Language language) {
-        return new LanguageDTO(language.getId(), language.getName(), DateTimeUtil.LocalDateTimeToUnix(language.getCreatedAt()), language.getIcon());
+        return new LanguageDTO(language.getId(), language.getName(), DateTimeUtil.localDateTimeToUnix(language.getCreatedAt()), language.getIcon());
     }
 }

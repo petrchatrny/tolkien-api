@@ -11,7 +11,7 @@ public class DateTimeUtil {
         return LocalDateTime.ofInstant(instant, ZoneId.systemDefault());
     }
 
-    public static Long LocalDateTimeToUnix(LocalDateTime dateTime) {
+    public static Long localDateTimeToUnix(LocalDateTime dateTime) {
         Instant instant = dateTime.toInstant(ZoneOffset.UTC);
         return instant.getEpochSecond();
     }

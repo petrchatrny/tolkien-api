@@ -20,7 +20,7 @@ public class WordMapper implements Function<Word, WordDTO> {
                 word.getCzechMeaning(),
                 word.getTranslation(),
                 word.getTengwar(),
-                DateTimeUtil.LocalDateTimeToUnix(word.getCreatedAt()),
+                DateTimeUtil.localDateTimeToUnix(word.getCreatedAt()),
                 word.getLanguage().getId(),
                 sourceId
         );
