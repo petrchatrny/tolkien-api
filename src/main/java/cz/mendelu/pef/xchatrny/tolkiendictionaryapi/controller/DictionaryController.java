@@ -10,8 +10,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.time.LocalDateTime;
-
 @Tag(name = "dictionaries")
 @RestController
 @RequestMapping("/api/dictionaries")
@@ -30,7 +28,7 @@ public class DictionaryController {
 
     @GetMapping("/sync")
     @Operation(summary = "Synchronize dictionaries")
-    SyncDTO sync(@RequestParam LocalDateTime lastSync) {
+    SyncDTO sync(@RequestParam Long lastSync) {
         return service.sync(lastSync);
     }
 }

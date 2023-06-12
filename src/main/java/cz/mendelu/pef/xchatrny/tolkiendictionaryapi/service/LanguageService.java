@@ -4,6 +4,7 @@ import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto.LanguageDTO;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto.LanguageMapper;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.model.Language;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.repository.ILanguageRepository;
+import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.util.DateTimeUtil;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -62,5 +63,45 @@ public class LanguageService {
 
         language.setDeletedAt(LocalDateTime.now());
         repository.save(language);
+    }
+
+    public Collection<LanguageDTO> getCreatedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllLanguages();
+        }
+
+        LocalDateTime dateTime = DateTimeUtil.unixToLocalDateTime(unixTime);
+        return repository.findCreatedAtAfter(dateTime)
+                .stream()
+                .map(new LanguageMapper())
+                .toList();
+    }
+
+    public Collection<LanguageDTO> getUpdatedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllLanguages();
+        }
+
+        LocalDateTime dateTime = DateTimeUtil.unixToLocalDateTime(unixTime);
+        return repository.findUpdatedAtAfter(dateTime)
+                .stream()
+                .map(new LanguageMapper())
+                .toList();
+    }
+
+    public Collection<UUID> getDeletedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllLanguages()
+                    .stream()
+                    .map(LanguageDTO::id)
+                    .toList();
+        }
+
+        LocalDateTime dateTime = DateTimeUtil.unixToLocalDateTime(unixTime);
+
+        return repository.findDeletedAtAfter(dateTime)
+                .stream()
+                .map(Language::getId)
+                .toList();
     }
 }

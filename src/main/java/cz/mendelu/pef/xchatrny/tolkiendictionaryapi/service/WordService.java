@@ -1,14 +1,16 @@
 package cz.mendelu.pef.xchatrny.tolkiendictionaryapi.service;
 
-import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto.WordDTO;
-import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto.WordMapper;
+import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto.*;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.model.Language;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.model.Source;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.model.Word;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.repository.IWordRepository;
+import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.util.DateTimeUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -52,7 +54,7 @@ public class WordService {
         try {
             source = sourceService.getSourceById(dto.sourceId());
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         Word word = Word.builder()
@@ -87,5 +89,45 @@ public class WordService {
 
         word.setDeletedAt(LocalDateTime.now());
         repository.save(word);
+    }
+
+    public Collection<WordDTO> getCreatedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllWords();
+        }
+
+        LocalDateTime dateTime = DateTimeUtil.unixToLocalDateTime(unixTime);
+        return repository.findCreatedAtAfter(dateTime)
+                .stream()
+                .map(new WordMapper())
+                .toList();
+    }
+
+    public Collection<WordDTO> getUpdatedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllWords();
+        }
+
+        LocalDateTime dateTime = DateTimeUtil.unixToLocalDateTime(unixTime);
+        return repository.findUpdatedAtAfter(dateTime)
+                .stream()
+                .map(new WordMapper())
+                .toList();
+    }
+
+    public Collection<UUID> getDeletedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllWords()
+                    .stream()
+                    .map(WordDTO::id)
+                    .toList();
+        }
+
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(unixTime), ZoneId.systemDefault());
+
+        return repository.findDeletedAtAfter(dateTime)
+                .stream()
+                .map(Word::getId)
+                .toList();
     }
 }

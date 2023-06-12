@@ -4,9 +4,12 @@ import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto.SourceDTO;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.dto.SourceMapper;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.model.Source;
 import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.repository.ISourceRepository;
+import cz.mendelu.pef.xchatrny.tolkiendictionaryapi.util.DateTimeUtil;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Collection;
 import java.util.UUID;
 
@@ -63,5 +66,45 @@ public class SourceService {
 
         source.setDeletedAt(LocalDateTime.now());
         repository.save(source);
+    }
+
+    public Collection<SourceDTO> getCreatedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllSources();
+        }
+
+        LocalDateTime dateTime = DateTimeUtil.unixToLocalDateTime(unixTime);
+        return repository.findCreatedAtAfter(dateTime)
+                .stream()
+                .map(new SourceMapper())
+                .toList();
+    }
+
+    public Collection<SourceDTO> getUpdatedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllSources();
+        }
+
+        LocalDateTime dateTime = DateTimeUtil.unixToLocalDateTime(unixTime);
+        return repository.findUpdatedAtAfter(dateTime)
+                .stream()
+                .map(new SourceMapper())
+                .toList();
+    }
+
+    public Collection<UUID> getDeletedAfter(Long unixTime) {
+        if (unixTime == null) {
+            return getAllSources()
+                    .stream()
+                    .map(SourceDTO::id)
+                    .toList();
+        }
+
+        LocalDateTime dateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(unixTime), ZoneId.systemDefault());
+
+        return repository.findDeletedAtAfter(dateTime)
+                .stream()
+                .map(Source::getId)
+                .toList();
     }
 }
