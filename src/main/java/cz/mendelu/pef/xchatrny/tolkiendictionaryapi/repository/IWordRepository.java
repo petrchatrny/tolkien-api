@@ -29,6 +29,6 @@ public interface IWordRepository extends JpaRepository<Word, UUID> {
     )
     Collection<Word> findUpdatedAtAfter(@Param("dateTime") LocalDateTime dateTime);
 
-    @Query("SELECT w FROM Word w WHERE w.deletedAt > :dateTime AND w.deletedAt is NULL")
+    @Query("SELECT w FROM Word w WHERE w.deletedAt > :dateTime")
     Collection<Word> findDeletedAtAfter(LocalDateTime dateTime);
 }
