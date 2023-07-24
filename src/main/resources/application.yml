@@ -1,0 +1,31 @@
+spring:
+  banner:
+    location: banner.txt
+  jpa:
+    hibernate:
+      ddl-auto: create
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+    driver-class-name: ${DB_DRIVER}
+
+server:
+  port: ${PORT:9999}
+
+logging:
+  level:
+    root: warn
+    web: debug
+    sql: error
+
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /
+    tags-sorter: alpha
+    operations-sorter: alpha
+    persist-authorization: true
