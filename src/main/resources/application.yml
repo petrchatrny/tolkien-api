@@ -11,6 +11,9 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: ${DB_DRIVER}
+  output:
+    ansi:
+      enabled: always
 
 server:
   port: ${PORT:9999}
@@ -29,3 +32,4 @@ springdoc:
     tags-sorter: alpha
     operations-sorter: alpha
     persist-authorization: true
+
