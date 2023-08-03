@@ -25,5 +25,5 @@ public class Language extends SoftDeletableEntity {
     @NotNull
     private String name;
 
-    private Byte[] icon;
+    private String description;
 }

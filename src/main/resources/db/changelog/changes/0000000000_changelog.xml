@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="0" author="Petr Chatrný">
+        <!-- LANGUAGE -->
+        <createTable tableName="language">
+            <column name="id_language" type="varchar(256)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="language_PK"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="icon" type="BLOB"/>
+
+            <!-- SoftDeletableEntity -->
+            <column name="created_at" type="timestamp" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamp"/>
+        </createTable>
+
+        <!-- SOURCE -->
+        <createTable tableName="source">
+            <column name="id_source" type="varchar(256)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="source_PK"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="url" type="varchar(2090)"/>
+            <column name="added_by_admin" type="boolean" defaultValue="true"/>
+
+            <!-- SoftDeletableEntity -->
+            <column name="created_at" type="timestamp" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamp"/>
+        </createTable>
+
+        <!-- WORD -->
+        <createTable tableName="word">
+            <column name="id_word" type="varchar(256)">
+                <constraints nullable="false" primaryKey="true" primaryKeyName="word_PK"/>
+            </column>
+            <column name="czech_meaning" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="translation" type="varchar(256)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tengwar" type="varchar(256)"/>
+            <column name="added_by_admin" type="boolean" defaultValue="true"/>
+
+            <!-- Foreign keys -->
+            <column name="id_language" type="varchar(256)">
+                <constraints nullable="false" referencedTableName="language" referencedColumnNames="id_language"
+                             foreignKeyName="word_language_FK"/>
+            </column>
+            <column name="id_source" type="varchar(256)">
+                <constraints nullable="true" referencedTableName="source" referencedColumnNames="id_source"
+                             foreignKeyName="word_source_FK"/>
+            </column>
+
+            <!-- SoftDeletableEntity -->
+            <column name="created_at" type="timestamp" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_at" type="timestamp" defaultValue="now()">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted_at" type="timestamp"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

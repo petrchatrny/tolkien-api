@@ -37,8 +37,10 @@ public class Word extends SoftDeletableEntity {
 
     @NotNull
     @ManyToOne
+    @JoinColumn(name = "id_language", nullable = false)
     private Language language;
 
     @ManyToOne
+    @JoinColumn(name = "id_source")
     private Source source;
 }
