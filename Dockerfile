@@ -1,20 +1,24 @@
+#
+# Build stage
+#
 FROM gradle:7.5.0-jdk18 AS build
 WORKDIR /gradle
 
-# build project
 COPY . .
 RUN gradle clean build -x test
 
+#
+# Run stage
+#
 FROM openjdk:17-jdk AS run
 WORKDIR /app
+EXPOSE 9999
+
+ENV DB_DRIVER=""
+ENV DB_URL=""
+ENV DB_USERNAME=""
+ENV DB_PASSWORD=""
 
 COPY --from=build /gradle/build/libs/app.jar app.jar
 
-ENV M_DB_DRIVER=""
-ENV M_DB_URL=""
-ENV M_DB_USERNAME=""
-ENV M_DB_PASSWORD=""
-
-EXPOSE 9999
-
-ENTRYPOINT ["java", "-DDB_DRIVER=${M_DB_DRIVER}", "-DDB_URL=${M_DB_URL}", "-DDB_USERNAME=${M_DB_USERNAME}", "-DDB_PASSWORD=${M_DB_PASSWORD}", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
