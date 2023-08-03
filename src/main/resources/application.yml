@@ -2,8 +2,9 @@ spring:
   banner:
     location: banner.txt
   jpa:
+    generate-ddl: false
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
       naming:
         physical-strategy: org.hibernate.boot.model.naming.CamelCaseToUnderscoresNamingStrategy
   datasource:
@@ -11,9 +12,8 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
     driver-class-name: ${DB_DRIVER}
-  output:
-    ansi:
-      enabled: always
+  liquibase:
+    change-log: classpath:db/changelog/master.xml
 
 server:
   port: ${PORT:9999}
