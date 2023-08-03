@@ -41,7 +41,6 @@ public class LanguageService {
         Language language = Language.builder()
                 .id(dto.id())
                 .name(dto.name())
-                .icon(dto.icon())
                 .build();
 
         return new LanguageMapper().apply(repository.save(language));
@@ -51,7 +50,6 @@ public class LanguageService {
         Language language = repository.findById(id).orElseThrow();
 
         language.setName(dto.name());
-        language.setIcon(dto.icon());
 
         return new LanguageMapper().apply(repository.save(language));
     }
