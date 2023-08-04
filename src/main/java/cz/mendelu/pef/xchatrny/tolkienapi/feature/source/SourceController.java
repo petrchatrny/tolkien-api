@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Tag(name = "sources")
 @RestController
-@RequestMapping("/api/sources")
+@RequestMapping("/v1/sources")
 public class SourceController {
     private final SourceService service;
 

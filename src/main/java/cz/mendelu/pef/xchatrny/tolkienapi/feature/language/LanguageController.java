@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Tag(name = "languages")
 @RestController
-@RequestMapping("/api/languages")
+@RequestMapping("/v1/languages")
 public final class LanguageController {
     private final LanguageService service;
 

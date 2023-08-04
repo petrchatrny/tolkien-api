@@ -13,7 +13,7 @@ import java.util.UUID;
 
 @Tag(name = "words")
 @RestController
-@RequestMapping("/api/words")
+@RequestMapping("/v1/words")
 public class WordController {
     private final WordService service;
 
