@@ -35,6 +35,14 @@ public interface SoftDeleteRepository<E extends SoftDeletableEntity, K extends S
      */
     E findById(K key, Boolean includeDeleted);
 
+    /**
+     * Deletes entity from database by its primary key permanently. Row in database is gone and irrecoverable.
+     * Hasta la vista entity!
+     *
+     * @param key primary key of entity
+     */
+    void deletePermanently(K key);
+
     @Override
     default List<E> findAll() {
         return findAll(false);

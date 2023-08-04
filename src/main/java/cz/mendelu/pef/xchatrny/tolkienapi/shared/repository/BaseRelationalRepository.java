@@ -102,4 +102,12 @@ public abstract class BaseRelationalRepository<E extends SoftDeletableEntity, K 
             entityManager.merge(entity);
         }
     }
+
+    @Override
+    public void deletePermanently(K key) {
+        E entity = findById(key);
+        if (entity != null) {
+            entityManager.remove(entity);
+        }
+    }
 }
