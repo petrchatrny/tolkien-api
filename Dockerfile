@@ -12,7 +12,7 @@ RUN gradle clean build -x test
 #
 FROM openjdk:17-jdk AS run
 WORKDIR /app
-EXPOSE 9999
+EXPOSE 8080
 
 ENV DB_DRIVER=""
 ENV DB_URL=""
