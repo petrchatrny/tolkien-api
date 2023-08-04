@@ -4,7 +4,7 @@ import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.DictionaryDTO;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.SyncDTO;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.SyncDeletedDTO;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.LanguageService;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto.LanguageDTO;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto.LanguageDto;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.SourceService;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDTO;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.WordService;
@@ -27,31 +27,31 @@ public class DictionaryService {
     }
 
     public DictionaryDTO download() {
-        Collection<LanguageDTO> languages = languageService.getAllLanguages();
+//        Collection<LanguageDto.Response> languages = languageService.getAllLanguages();
         Collection<SourceDTO> sources = sourceService.getAllSources();
         Collection<WordDTO> words = wordService.getAllWords();
 
-        return new DictionaryDTO(words, languages, sources);
+        return new DictionaryDTO(words, null, sources);
     }
 
     public SyncDTO sync(Long lastSync) {
         // gather deleted entities
         Collection<UUID> deletedWords = wordService.getDeletedAfter(lastSync);
-        Collection<UUID> deletedLanguages = languageService.getDeletedAfter(lastSync);
+//        Collection<UUID> deletedLanguages = languageService.getDeletedAfter(lastSync);
         Collection<UUID> deletedSources = sourceService.getDeletedAfter(lastSync);
-        SyncDeletedDTO deletedEntities = new SyncDeletedDTO(deletedWords, deletedLanguages, deletedSources);
+        SyncDeletedDTO deletedEntities = new SyncDeletedDTO(deletedWords, null, deletedSources);
 
         // gather updated entities
         Collection<WordDTO> updatedWords = wordService.getUpdatedAfter(lastSync);
-        Collection<LanguageDTO> updatedLanguages = languageService.getUpdatedAfter(lastSync);
+//        Collection<LanguageDto> updatedLanguages = languageService.getUpdatedAfter(lastSync);
         Collection<SourceDTO> updatedSources = sourceService.getUpdatedAfter(lastSync);
-        DictionaryDTO updatedEntities = new DictionaryDTO(updatedWords, updatedLanguages, updatedSources);
+        DictionaryDTO updatedEntities = new DictionaryDTO(updatedWords, null, updatedSources);
 
         // gather created entities
         Collection<WordDTO> createdWords = wordService.getCreatedAfter(lastSync);
-        Collection<LanguageDTO> createdLanguages = languageService.getCreatedAfter(lastSync);
+//        Collection<LanguageDto> createdLanguages = languageService.getCreatedAfter(lastSync);
         Collection<SourceDTO> createdSources = sourceService.getCreatedAfter(lastSync);
-        DictionaryDTO createdEntities = new DictionaryDTO(createdWords, createdLanguages, createdSources);
+        DictionaryDTO createdEntities = new DictionaryDTO(createdWords, null, createdSources);
 
         // return result
         return new SyncDTO(createdEntities, updatedEntities, deletedEntities);

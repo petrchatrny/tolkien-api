@@ -49,7 +49,7 @@ public class WordService {
 
     public WordDTO createWord(WordDTO dto) {
         System.out.println(dto.languageId());
-        Language language = languageService.getLanguageById(dto.languageId());
+//        Language language = languageService.getLanguageById(dto.languageId());
         Source source = null;
 
         try {
@@ -64,7 +64,7 @@ public class WordService {
                 .translation(dto.translation())
                 .tengwar(dto.tengwar())
                 .addedByAdmin(true)
-                .language(language)
+                .language(null)
                 .source(source)
                 .build();
 
@@ -73,13 +73,13 @@ public class WordService {
 
     public WordDTO updateWord(UUID id, WordDTO dto) {
         Word word = repository.findById(id).orElseThrow();
-        Language language = languageService.getLanguageById(dto.languageId());
+//        Language language = languageService.getLanguageById(dto.languageId());
         Source source = sourceService.getSourceById(dto.sourceId());
 
         word.setCzechMeaning(dto.czechMeaning());
         word.setTranslation(dto.translation());
         word.setTengwar(dto.tengwar());
-        word.setLanguage(language);
+        word.setLanguage(null);
         word.setSource(source);
 
         return new WordMapper().apply(repository.save(word));

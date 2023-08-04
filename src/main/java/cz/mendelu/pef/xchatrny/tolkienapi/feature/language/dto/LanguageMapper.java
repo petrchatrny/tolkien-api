@@ -1,13 +1,15 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto;
 
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.Language;
-import cz.mendelu.pef.xchatrny.tolkienapi.util.DateTimeUtil;
+import org.mapstruct.Mapper;
 
-import java.util.function.Function;
+import java.util.List;
 
-public class LanguageMapper implements Function<Language, LanguageDTO> {
-    @Override
-    public LanguageDTO apply(Language language) {
-        return new LanguageDTO(language.getId(), language.getName(), DateTimeUtil.localDateTimeToUnix(language.getCreatedAt()));
-    }
+@Mapper(componentModel = "spring")
+public interface LanguageMapper {
+    Language toDomain(LanguageDto.Create dto);
+
+    LanguageDto.Response toResponseDto(Language language);
+
+    List<LanguageDto.Response> toResponseListDto(List<Language> language);
 }
