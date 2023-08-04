@@ -1,6 +1,8 @@
 spring:
   banner:
     location: banner.txt
+  config:
+    import: optional:.env[.properties]
   jpa:
     generate-ddl: false
     hibernate:
