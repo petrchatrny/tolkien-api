@@ -6,6 +6,7 @@ import cz.mendelu.pef.xchatrny.tolkienapi.shared.service.BaseEntityService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,10 +15,12 @@ public class LanguageServiceImpl
         extends BaseEntityService<Language, UUID, LanguageDto.Create, LanguageDto.Update, LanguageDto.Response>
         implements LanguageService {
 
+    private final LanguageRepository repository;
     private final LanguageMapper mapper;
 
     protected LanguageServiceImpl(LanguageRepository repository, LanguageMapper mapper) {
         super(repository);
+        this.repository = repository;
         this.mapper = mapper;
     }
 
@@ -57,5 +60,20 @@ public class LanguageServiceImpl
     public void delete(UUID id) {
         checkEntityExists(id);
         repository.delete(id);
+    }
+
+    @Override
+    public List<Language> getCreatedAfter(LocalDateTime dateTime) {
+        return repository.findCreatedAfter(dateTime);
+    }
+
+    @Override
+    public List<Language> getUpdatedAfter(LocalDateTime dateTime) {
+        return repository.findUpdatedAfter(dateTime);
+    }
+
+    @Override
+    public List<Language> getDeletedAfter(LocalDateTime dateTime) {
+        return repository.findDeletedAfter(dateTime);
     }
 }

@@ -16,7 +16,7 @@ import java.util.List;
  * @param <K> primary key type
  */
 public abstract class BaseRelationalRepository<E extends SoftDeletableEntity, K extends Serializable>
-        implements SoftDeleteRepository<E, K> {
+        implements SoftDeleteRepository<E, K>, SyncRepository<E> {
     protected final EntityManager entityManager;
     private final Class<E> entityClass;
 
@@ -103,11 +103,73 @@ public abstract class BaseRelationalRepository<E extends SoftDeletableEntity, K 
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param key primary key of entity
+     */
     @Override
     public void deletePermanently(K key) {
         E entity = findById(key);
         if (entity != null) {
             entityManager.remove(entity);
         }
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param dateTime target timestamp
+     * @return list of entities created after target timestamp
+     */
+    @Override
+    public List<E> findCreatedAfter(LocalDateTime dateTime) {
+        String jpql = "SELECT e " +
+                      "FROM " + entityClass.getSimpleName() + " e " +
+                      "WHERE e.createdAt > :targetDate " +
+                      "  AND e.deletedAt IS NULL";
+
+        TypedQuery<E> query = entityManager.createQuery(jpql, entityClass);
+        query.setParameter("targetDate", dateTime);
+
+        return query.getResultList();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param dateTime target timestamp
+     * @return list of entities updated after target timestamp
+     */
+    @Override
+    public List<E> findUpdatedAfter(LocalDateTime dateTime) {
+        String jpql = "SELECT e " +
+                      "FROM " + entityClass.getSimpleName() + " e " +
+                      "WHERE e.updatedAt > :targetDate " +
+                      "  AND e.updatedAt != e.createdAt " +
+                      "  AND e.deletedAt is NULL ";
+
+        TypedQuery<E> query = entityManager.createQuery(jpql, entityClass);
+        query.setParameter("targetDate", dateTime);
+
+        return query.getResultList();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param dateTime target timestamp
+     * @return list of entities deleted after target timestamp
+     */
+    @Override
+    public List<E> findDeletedAfter(LocalDateTime dateTime) {
+        String jpql = "SELECT e " +
+                      "FROM " + entityClass.getSimpleName() + " e " +
+                      "WHERE e.deletedAt > :targetDate";
+
+        TypedQuery<E> query = entityManager.createQuery(jpql, entityClass);
+        query.setParameter("targetDate", dateTime);
+
+        return query.getResultList();
     }
 }

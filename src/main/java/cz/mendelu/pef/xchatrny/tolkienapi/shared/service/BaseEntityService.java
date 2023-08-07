@@ -3,7 +3,7 @@ package cz.mendelu.pef.xchatrny.tolkienapi.shared.service;
 import cz.mendelu.pef.xchatrny.tolkienapi.shared.repository.CrudRepository;
 
 public abstract class BaseEntityService<E, K, C, U, R> implements CrudService<K, C, U, R>{
-    protected final CrudRepository<E, K> repository;
+    private final CrudRepository<E, K> repository;
 
     protected BaseEntityService(CrudRepository<E, K> repository) {
         this.repository = repository;
