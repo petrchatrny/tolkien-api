@@ -3,6 +3,7 @@ package cz.mendelu.pef.xchatrny.tolkienapi.feature.language;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto.LanguageDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,14 +35,14 @@ public final class LanguageController {
     @PostMapping("/")
     @Operation(summary = "Create new language")
     @ResponseStatus(HttpStatus.CREATED)
-    LanguageDto.Response createLanguage(@RequestBody LanguageDto.Create dto) {
+    LanguageDto.Response createLanguage(@Valid @RequestBody LanguageDto.Create dto) {
         return service.create(dto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update existing language by its id")
-    LanguageDto.Response updateLanguage(@PathVariable UUID id, @RequestBody LanguageDto.Update dto) {
+    LanguageDto.Response updateLanguage(@PathVariable UUID id, @Valid @RequestBody LanguageDto.Update dto) {
         return service.update(id, dto);
     }
 

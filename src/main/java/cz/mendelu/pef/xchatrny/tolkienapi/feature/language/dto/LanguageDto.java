@@ -1,6 +1,7 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto;
 
 import io.swagger.v3.oas.annotations.media.Schema;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,6 +14,7 @@ public final class LanguageDto {
     @Schema(name = "LanguageDtoCreate")
     public static class Create {
         @Schema(example = "Quenya", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotBlank(message = "name is mandatory")
         private String name;
 
         @Schema(example = "Elvish language", requiredMode = Schema.RequiredMode.NOT_REQUIRED)
@@ -24,6 +26,7 @@ public final class LanguageDto {
     @Schema(name = "LanguageDtoUpdate")
     public static class Update {
         @Schema(example = "Quenya", requiredMode = Schema.RequiredMode.REQUIRED)
+        @NotBlank(message = "name is mandatory")
         private String name;
 
         @Schema(example = "Elvish language", requiredMode = Schema.RequiredMode.NOT_REQUIRED)

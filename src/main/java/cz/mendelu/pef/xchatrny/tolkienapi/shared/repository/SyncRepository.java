@@ -17,7 +17,7 @@ public interface SyncRepository<E extends SoftDeletableEntity> {
      * @param dateTime target timestamp
      * @return list of entities created after provided timestamp
      */
-    public List<E> findCreatedAfter(LocalDateTime dateTime);
+    List<E> findCreatedAfter(LocalDateTime dateTime);
 
     /**
      * method for obtaining entities that are not deleted and were updated after target timestamp
@@ -25,7 +25,7 @@ public interface SyncRepository<E extends SoftDeletableEntity> {
      * @param dateTime target timestamp
      * @return list of entities updated after provided timestamp
      */
-    public List<E> findUpdatedAfter(LocalDateTime dateTime);
+    List<E> findUpdatedAfter(LocalDateTime dateTime);
 
     /**
      * method for obtaining entities that are deleted and were deleted after target timestamp
@@ -33,5 +33,5 @@ public interface SyncRepository<E extends SoftDeletableEntity> {
      * @param dateTime target timestamp
      * @return list of deleted entities after provided timestamp
      */
-    public List<E> findDeletedAfter(LocalDateTime dateTime);
+    List<E> findDeletedAfter(LocalDateTime dateTime);
 }
