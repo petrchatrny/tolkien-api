@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "dictionaries")
 @RestController
-@RequestMapping("/api/v1/dictionaries")
+@RequestMapping("/v1/dictionaries")
 public class DictionaryController {
     private final DictionaryService service;
 
@@ -27,7 +27,7 @@ public class DictionaryController {
     }
 
     @GetMapping("/sync")
-    @Operation(summary = "Synchronize dictionaries")
+    @Operation(summary = "Synchronize dictionaries", deprecated = true)
     SyncDTO sync(@RequestParam @Parameter(description = "unix time in millis") Long lastSync) {
         return service.sync(lastSync);
     }

@@ -35,11 +35,11 @@ public class DictionaryService {
     }
 
     public DictionaryDTO download() {
-//        Collection<LanguageDto.Response> languages = languageService.getAllLanguages();
+        Collection<LanguageDto.Response> languages = languageService.findAll();
         Collection<SourceDTO> sources = sourceService.getAllSources();
         Collection<WordDTO> words = wordService.getAllWords();
 
-        return new DictionaryDTO(words, null, sources);
+        return new DictionaryDTO(words, languages, sources);
     }
 
     // TODO fixme
