@@ -15,7 +15,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "source")
-public class Source extends SoftDeletableEntity {
+public final class Source extends SoftDeletableEntity {
     @Id
     @GeneratedValue(generator = "uuid4")
     @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
@@ -26,7 +26,4 @@ public class Source extends SoftDeletableEntity {
     private String name;
 
     private String url;
-
-    @NotNull
-    private Boolean addedByAdmin = true;
 }

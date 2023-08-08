@@ -1,22 +1,21 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.DictionaryDTO;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.SyncDTO;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.SyncDeletedDTO;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.DictionaryDto;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.SyncDto;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.Language;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.LanguageService;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto.LanguageDto;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto.LanguageMapper;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.SourceService;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDTO;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDto;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceMapper;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.WordService;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto.WordDTO;
+import cz.mendelu.pef.xchatrny.tolkienapi.util.DateTimeUtil;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -26,53 +25,88 @@ public class DictionaryService {
     private final WordService wordService;
 
     private final LanguageMapper languageMapper;
+    private final SourceMapper sourceMapper;
 
-    public DictionaryService(LanguageService languageService, SourceService sourceService, WordService wordService, LanguageMapper languageMapper) {
+    public DictionaryService(LanguageService languageService, SourceService sourceService, WordService wordService, LanguageMapper languageMapper, SourceMapper sourceMapper) {
         this.languageService = languageService;
         this.sourceService = sourceService;
         this.wordService = wordService;
         this.languageMapper = languageMapper;
+        this.sourceMapper = sourceMapper;
     }
 
-    public DictionaryDTO download() {
-        Collection<LanguageDto.Response> languages = languageService.findAll();
-        Collection<SourceDTO> sources = sourceService.getAllSources();
-        Collection<WordDTO> words = wordService.getAllWords();
+    public DictionaryDto.Entities download() {
+        List<LanguageDto.Response> languages = languageService.findAll();
+        List<SourceDto.Response> sources = sourceService.findAll();
+//        List<WordDTO> words = wordService.getAllWords();
 
-        return new DictionaryDTO(words, languages, sources);
+        return new DictionaryDto.Entities(null, languages, sources);
     }
 
     // TODO fixme
-    public SyncDTO sync(Long lastSync) {
+    public SyncDto sync(Long lastSyncUnix) {
+        // convert unix to LocalDateTime
+        LocalDateTime lastSync = DateTimeUtil.unixToLocalDateTime(lastSyncUnix);
+
         // gather deleted entities
-        Collection<UUID> deletedWords = wordService.getDeletedAfter(lastSync);
-        Collection<UUID> deletedLanguages = languageService.getDeletedAfter(unixToLocaleDateTime(lastSync)).stream().map(Language::getId).toList();
-        Collection<UUID> deletedSources = sourceService.getDeletedAfter(lastSync);
-        SyncDeletedDTO deletedEntities = new SyncDeletedDTO(deletedWords, deletedLanguages, deletedSources);
+        DictionaryDto.References deletedEntities = gatherDeletedEntities(lastSync);
 
         // gather updated entities
-        Collection<WordDTO> updatedWords = wordService.getUpdatedAfter(lastSync);
-        Collection<LanguageDto.Response> updatedLanguages = languageService.getUpdatedAfter(unixToLocaleDateTime(lastSync))
-                                                                           .stream()
-                                                                           .map(languageMapper::toResponseDto)
-                                                                           .toList();
-        Collection<SourceDTO> updatedSources = sourceService.getUpdatedAfter(lastSync);
-        DictionaryDTO updatedEntities = new DictionaryDTO(updatedWords, updatedLanguages, updatedSources);
+        DictionaryDto.Entities updatedEntities = gatherUpdatedEntities(lastSync);
 
         // gather created entities
-        Collection<WordDTO> createdWords = wordService.getCreatedAfter(lastSync);
-        Collection<LanguageDto.Response> createdLanguages = languageService.getCreatedAfter(unixToLocaleDateTime(lastSync))
-                                                                           .stream()
-                                                                           .map(languageMapper::toResponseDto)
-                                                                           .toList();
-        Collection<SourceDTO> createdSources = sourceService.getCreatedAfter(lastSync);
-        DictionaryDTO createdEntities = new DictionaryDTO(createdWords, createdLanguages, createdSources);
+        DictionaryDto.Entities createdEntities = gatherCreatedEntities(lastSync);
 
         // return result
-        return new SyncDTO(createdEntities, updatedEntities, deletedEntities);
+        return new SyncDto(createdEntities, updatedEntities, deletedEntities);
     }
 
-    public LocalDateTime unixToLocaleDateTime(Long unix) {
-        return LocalDateTime.ofInstant(Instant.ofEpochMilli(unix), ZoneId.systemDefault());
+
+    private DictionaryDto.Entities gatherCreatedEntities(LocalDateTime lastSync) {
+        // TODO add words
+
+        List<LanguageDto.Response> createdLanguages = languageService.getCreatedAfter(lastSync)
+                .stream()
+                .map(languageMapper::toResponseDto)
+                .toList();
+
+        List<SourceDto.Response> createdSources = sourceService.getCreatedAfter(lastSync)
+                .stream()
+                .map(sourceMapper::toResponseDto)
+                .toList();
+
+        return new DictionaryDto.Entities(null, createdLanguages, createdSources);
+    }
+
+    private DictionaryDto.Entities gatherUpdatedEntities(LocalDateTime lastSync) {
+        // TODO add words
+
+        List<LanguageDto.Response> createdLanguages = languageService.getUpdatedAfter(lastSync)
+                .stream()
+                .map(languageMapper::toResponseDto)
+                .toList();
+
+        List<SourceDto.Response> createdSources = sourceService.getUpdatedAfter(lastSync)
+                .stream()
+                .map(sourceMapper::toResponseDto)
+                .toList();
+
+        return new DictionaryDto.Entities(null, createdLanguages, createdSources);
+    }
+
+    private DictionaryDto.References gatherDeletedEntities(LocalDateTime lastSync) {
+        // TODO add words
+
+        List<UUID> deletedLanguages = languageService.getDeletedAfter(lastSync)
+                .stream()
+                .map(Language::getId)
+                .toList();
+
+        List<UUID> deletedSources = sourceService.getDeletedAfter(lastSync)
+                .stream()
+                .map(Source::getId)
+                .toList();
+
+        return new DictionaryDto.References(null, deletedLanguages, deletedSources);
     }
 }

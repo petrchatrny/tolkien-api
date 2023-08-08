@@ -1,9 +1,8 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.word;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.Language;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.LanguageService;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.SourceService;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.SourceServiceImpl;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto.WordDTO;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto.WordMapper;
 import cz.mendelu.pef.xchatrny.tolkienapi.util.DateTimeUtil;
@@ -19,16 +18,16 @@ import java.util.UUID;
 public class WordService {
     private final IWordRepository repository;
     private final LanguageService languageService;
-    private final SourceService sourceService;
+    private final SourceServiceImpl sourceServiceImpl;
 
     public WordService(
             IWordRepository repository,
             LanguageService languageService,
-            SourceService sourceService
+            SourceServiceImpl sourceServiceImpl
     ) {
         this.repository = repository;
         this.languageService = languageService;
-        this.sourceService = sourceService;
+        this.sourceServiceImpl = sourceServiceImpl;
     }
 
     public Collection<WordDTO> getAllWords() {
@@ -53,7 +52,7 @@ public class WordService {
         Source source = null;
 
         try {
-            source = sourceService.getSourceById(dto.sourceId());
+//            source = sourceServiceImpl.getSourceById(dto.sourceId());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -74,13 +73,13 @@ public class WordService {
     public WordDTO updateWord(UUID id, WordDTO dto) {
         Word word = repository.findById(id).orElseThrow();
 //        Language language = languageService.getLanguageById(dto.languageId());
-        Source source = sourceService.getSourceById(dto.sourceId());
+//        Source source = sourceServiceImpl.getSourceById(dto.sourceId());
 
         word.setCzechMeaning(dto.czechMeaning());
         word.setTranslation(dto.translation());
         word.setTengwar(dto.tengwar());
         word.setLanguage(null);
-        word.setSource(source);
+        word.setSource(null);
 
         return new WordMapper().apply(repository.save(word));
     }

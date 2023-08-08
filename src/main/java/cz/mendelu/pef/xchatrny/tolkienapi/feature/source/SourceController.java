@@ -1,55 +1,49 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.source;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDTO;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDto;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 @Tag(name = "sources")
 @RestController
 @RequestMapping("/v1/sources")
 public class SourceController {
-    private final SourceService service;
+    private final SourceServiceImpl service;
 
-    public SourceController(SourceService service) {
+    public SourceController(SourceServiceImpl service) {
         this.service = service;
     }
 
     @GetMapping("/")
     @Operation(summary = "Get list of all sources")
-    Collection<SourceDTO> getSources() {
-        return service.getAllSources();
+    List<SourceDto.Response> getSources() {
+        return service.findAll();
     }
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new source")
-    SourceDTO createSource(@RequestBody SourceDTO dto) {
-        return service.createSource(dto);
+    SourceDto.Response createSource(@RequestBody @Valid SourceDto.Create dto) {
+        return service.create(dto);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update existing source by its id")
-    SourceDTO updateSource(@PathVariable UUID id, @RequestBody SourceDTO dto) {
-        return service.updateSource(id, dto);
+    SourceDto.Response updateSource(@PathVariable UUID id, @RequestBody @Valid  SourceDto.Update dto) {
+        return service.update(id, dto);
     }
 
     @DeleteMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(summary = "Delete existing source by its id")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Source deleted"),
-            @ApiResponse(responseCode = "403", description = "Unauthenticated access"),
-            @ApiResponse(responseCode = "404", description = "Source not found")
-    })
     void deleteSource(@PathVariable UUID id) {
-        service.deleteSource(id);
+        service.delete(id);
     }
 }

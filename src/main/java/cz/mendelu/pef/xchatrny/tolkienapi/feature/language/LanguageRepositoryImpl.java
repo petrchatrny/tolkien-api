@@ -13,7 +13,8 @@ import java.util.UUID;
 @Repository
 public class LanguageRepositoryImpl
         extends BaseRelationalRepository<Language, UUID>
-        implements LanguageRepository, SyncRepository<Language> {
+        implements LanguageRepository {
+
     public LanguageRepositoryImpl(EntityManager entityManager) {
         super(entityManager, Language.class);
     }
