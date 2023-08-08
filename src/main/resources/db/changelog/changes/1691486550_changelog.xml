@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="3" author="Petr Chatrný">
+        <sql>SET FOREIGN_KEY_CHECKS = 0;</sql>
+
+        <renameColumn tableName="language" oldColumnName="id_language" newColumnName="id_language"
+                      columnDataType="binary(16)"/>
+        <renameColumn tableName="source" oldColumnName="id_source" newColumnName="id_source"
+                      columnDataType="binary(16)"/>
+        <renameColumn tableName="word" oldColumnName="id_word" newColumnName="id_word"
+                      columnDataType="binary(16)"/>
+
+        <sql>SET FOREIGN_KEY_CHECKS = 1;</sql>
+    </changeSet>
+</databaseChangeLog>
