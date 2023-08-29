@@ -1,12 +1,11 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.word;
 
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.Language;
-import cz.mendelu.pef.xchatrny.tolkienapi.shared.model.SoftDeletableEntity;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
+import cz.mendelu.pef.xchatrny.tolkienapi.shared.model.SoftDeletableEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
@@ -30,9 +29,6 @@ public class Word extends SoftDeletableEntity {
     private String translation;
 
     private String tengwar;
-
-    @NotNull
-    private Boolean addedByAdmin = true;
 
     @NotNull
     @ManyToOne

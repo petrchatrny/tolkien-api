@@ -1,28 +1,17 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto;
 
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDto;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.Word;
-import cz.mendelu.pef.xchatrny.tolkienapi.util.DateTimeUtil;
+import org.mapstruct.Mapper;
 
-import java.util.UUID;
-import java.util.function.Function;
+import java.util.List;
 
-public class WordMapper implements Function<Word, WordDTO> {
-    @Override
-    public WordDTO apply(Word word) {
-        UUID sourceId = null;
+@Mapper(componentModel = "spring")
+public interface WordMapper {
+    Word toDomain(WordDto.Create dto);
 
-        if (word.getSource() != null) {
-            sourceId = word.getSource().getId();
-        }
+    WordDto.Response toResponseDto(Word word);
 
-        return new WordDTO(
-                word.getId(),
-                word.getCzechMeaning(),
-                word.getTranslation(),
-                word.getTengwar(),
-                DateTimeUtil.localDateTimeToUnix(word.getCreatedAt()),
-                word.getLanguage().getId(),
-                sourceId
-        );
-    }
+    List<SourceDto.Response> toResponseListDto(List<Source> languages);
 }
