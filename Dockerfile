@@ -10,9 +10,9 @@ RUN gradle clean build -x test
 #
 # Run stage
 #
-FROM openjdk:17-jdk AS run
+FROM openjdk:18-jdk AS run
 WORKDIR /app
-EXPOSE 9999
+EXPOSE 80
 
 ENV DB_DRIVER=""
 ENV DB_URL=""

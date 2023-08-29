@@ -79,5 +79,9 @@
             </column>
             <column name="deleted_at" type="timestamp"/>
         </createTable>
+
+        <modifySql dbms="mariadb">
+            <append value="ENGINE=InnoDB CHARSET=UTF8 COLLATE utf8_unicode_ci"/>
+        </modifySql>
     </changeSet>
 </databaseChangeLog>
