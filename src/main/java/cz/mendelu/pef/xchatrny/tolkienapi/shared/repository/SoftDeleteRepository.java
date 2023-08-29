@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Extension of ICRUDRepository interface.
+ * Extension of CrudRepository interface.
  *
  * <p>It adds new methods for working with SoftDeletableEntity.</p>
  *
