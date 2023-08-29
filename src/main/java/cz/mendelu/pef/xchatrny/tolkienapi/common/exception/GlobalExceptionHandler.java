@@ -1,4 +1,4 @@
-package cz.mendelu.pef.xchatrny.tolkienapi.shared.exception;
+package cz.mendelu.pef.xchatrny.tolkienapi.common.exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;

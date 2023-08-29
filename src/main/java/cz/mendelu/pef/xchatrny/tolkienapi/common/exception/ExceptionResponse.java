@@ -1,4 +1,4 @@
-package cz.mendelu.pef.xchatrny.tolkienapi.shared.exception;
+package cz.mendelu.pef.xchatrny.tolkienapi.common.exception;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
