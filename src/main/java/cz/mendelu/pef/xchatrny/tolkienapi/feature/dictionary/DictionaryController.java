@@ -27,7 +27,7 @@ public class DictionaryController {
     }
 
     @GetMapping("/sync")
-    @Operation(summary = "Synchronize dictionaries", deprecated = true)
+    @Operation(summary = "Synchronize dictionaries")
     SyncDto sync(@RequestParam @Parameter(description = "unix time in millis") Long lastSync) {
         return service.sync(lastSync);
     }

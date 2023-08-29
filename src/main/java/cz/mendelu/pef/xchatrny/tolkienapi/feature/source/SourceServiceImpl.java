@@ -43,6 +43,7 @@ public class SourceServiceImpl
         return mapper.toResponseDto(source);
     }
 
+    @Transactional
     @Override
     public SourceDto.Response update(UUID id, SourceDto.Update dto) {
         checkEntityExists(id);
@@ -55,6 +56,7 @@ public class SourceServiceImpl
         return mapper.toResponseDto(source);
     }
 
+    @Transactional
     @Override
     public void delete(UUID id) {
         checkEntityExists(id);

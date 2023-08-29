@@ -9,7 +9,7 @@ import java.util.List;
 public interface SourceMapper {
     Source toDomain(SourceDto.Create dto);
 
-    SourceDto.Response toResponseDto(Source language);
+    SourceDto.Response toResponseDto(Source source);
 
-    List<SourceDto.Response> toResponseListDto(List<Source> language);
+    List<SourceDto.Response> toResponseListDto(List<Source> sources);
 }
