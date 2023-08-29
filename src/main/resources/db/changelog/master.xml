@@ -5,7 +5,7 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
     https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
-    <property name="now" value="CURRENT_TIMESTAMP" dbms="mysql"/>
+    <property name="now" value="CURRENT_TIMESTAMP" dbms="mariadb"/>
     <property name="now" value="now()" dbms="postgresql"/>
 
     <includeAll path="/db/changelog/changes/"/>

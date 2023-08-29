@@ -5,15 +5,20 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="3" author="Petr Chatrný">
-        <sql>SET FOREIGN_KEY_CHECKS = 0;</sql>
+        <dropForeignKeyConstraint baseTableName="word" constraintName="word_language_FK"/>
+        <dropForeignKeyConstraint baseTableName="word" constraintName="word_source_FK"/>
 
-        <renameColumn tableName="language" oldColumnName="id_language" newColumnName="id_language"
-                      columnDataType="binary(16)"/>
-        <renameColumn tableName="source" oldColumnName="id_source" newColumnName="id_source"
-                      columnDataType="binary(16)"/>
-        <renameColumn tableName="word" oldColumnName="id_word" newColumnName="id_word"
-                      columnDataType="binary(16)"/>
+        <modifyDataType tableName="language" columnName="id_language" newDataType="binary(16)"/>
+        <modifyDataType tableName="source" columnName="id_source" newDataType="binary(16)"/>
 
-        <sql>SET FOREIGN_KEY_CHECKS = 1;</sql>
+
+        <modifyDataType tableName="word" columnName="id_word" newDataType="binary(16)"/>
+        <modifyDataType tableName="word" columnName="id_language" newDataType="binary(16)"/>
+        <modifyDataType tableName="word" columnName="id_source" newDataType="binary(16)"/>
+
+        <addForeignKeyConstraint baseTableName="word" baseColumnNames="id_language" constraintName="word_language_FK"
+                                 referencedTableName="language" referencedColumnNames="id_language"/>
+        <addForeignKeyConstraint baseTableName="word" baseColumnNames="id_source" constraintName="word_source_FK"
+                                 referencedTableName="source" referencedColumnNames="id_source"/>
     </changeSet>
 </databaseChangeLog>
