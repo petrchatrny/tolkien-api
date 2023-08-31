@@ -1,8 +1,6 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.shared.model;
 
-import jakarta.persistence.MappedSuperclass;
-import jakarta.persistence.PrePersist;
-import jakarta.persistence.PreUpdate;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public abstract class SoftDeletableEntity {
-
+    @Column(updatable = false)
     @NotNull
     private LocalDateTime createdAt;
 

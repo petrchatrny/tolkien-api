@@ -8,6 +8,9 @@
     <property name="now" value="CURRENT_TIMESTAMP" dbms="mysql"/>
     <property name="now" value="now()" dbms="postgresql"/>
 
+    <property name="uuid_type" value="binary(16)" dbms="mariadb"/>
+    <property name="uuid_type" value="uuid" dbms="postgresql"/>
+
     <includeAll path="/db/changelog/changes/"/>
 
 </databaseChangeLog>
