@@ -30,7 +30,6 @@ dependencies {
     // implementation 'org.springdoc:springdoc-openapi-security:1.7.0'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.0.Final'
     implementation "org.mapstruct:mapstruct:1.5.5.Final"
-
     implementation 'org.liquibase:liquibase-core:4.23.0'
 
     compileOnly 'org.projectlombok:lombok'

@@ -21,9 +21,9 @@ public class WordDto {
         private String tengwar;
 
         @NotBlank(message = "languageId is mandatory")
-        private String languageId;
+        private UUID languageId;
 
-        private String sourceId;
+        private UUID sourceId;
     }
 
     @Getter
@@ -38,9 +38,9 @@ public class WordDto {
         private String tengwar;
 
         @NotBlank(message = "languageId is mandatory")
-        private String languageId;
+        private UUID languageId;
 
-        private String sourceId;
+        private UUID sourceId;
     }
 
     @Getter
