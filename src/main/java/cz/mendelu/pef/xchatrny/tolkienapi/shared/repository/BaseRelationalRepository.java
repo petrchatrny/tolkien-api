@@ -86,7 +86,10 @@ public abstract class BaseRelationalRepository<E extends SoftDeletableEntity, K 
      */
     @Override
     public E update(E item) {
-        return entityManager.merge(item);
+        E entity = entityManager.merge(item);
+        entityManager.flush();
+
+        return entity;
     }
 
     /**
@@ -100,6 +103,7 @@ public abstract class BaseRelationalRepository<E extends SoftDeletableEntity, K 
         if (entity != null) {
             entity.setDeletedAt(LocalDateTime.now());
             entityManager.merge(entity);
+            entityManager.flush();
         }
     }
 

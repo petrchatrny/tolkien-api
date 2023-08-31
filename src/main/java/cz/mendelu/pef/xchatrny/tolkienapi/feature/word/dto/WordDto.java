@@ -1,6 +1,7 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +21,7 @@ public class WordDto {
 
         private String tengwar;
 
-        @NotBlank(message = "languageId is mandatory")
+        @NotNull(message = "languageId is mandatory")
         private UUID languageId;
 
         private UUID sourceId;
@@ -37,7 +38,7 @@ public class WordDto {
 
         private String tengwar;
 
-        @NotBlank(message = "languageId is mandatory")
+        @NotNull(message = "languageId is mandatory")
         private UUID languageId;
 
         private UUID sourceId;
