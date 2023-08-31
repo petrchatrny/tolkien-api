@@ -1,14 +1,15 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto;
 
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
-import cz.mendelu.pef.xchatrny.tolkienapi.util.DateTimeUtil;
+import org.mapstruct.Mapper;
 
-import java.util.function.Function;
+import java.util.List;
 
-public class SourceMapper implements Function<Source, SourceDTO> {
+@Mapper(componentModel = "spring")
+public interface SourceMapper {
+    Source toDomain(SourceDto.Create dto);
 
-    @Override
-    public SourceDTO apply(Source source) {
-        return new SourceDTO(source.getId(), source.getName(), DateTimeUtil.localDateTimeToUnix(source.getCreatedAt()), source.getUrl());
-    }
+    SourceDto.Response toResponseDto(Source source);
+
+    List<SourceDto.Response> toResponseListDto(List<Source> sources);
 }

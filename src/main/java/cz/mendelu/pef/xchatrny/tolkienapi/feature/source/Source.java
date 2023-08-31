@@ -4,7 +4,6 @@ import cz.mendelu.pef.xchatrny.tolkienapi.shared.model.SoftDeletableEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
-import org.hibernate.annotations.GenericGenerator;
 
 import java.util.UUID;
 
@@ -15,10 +14,9 @@ import java.util.UUID;
 @NoArgsConstructor
 @Entity
 @Table(name = "source")
-public class Source extends SoftDeletableEntity {
+public final class Source extends SoftDeletableEntity {
     @Id
-    @GeneratedValue(generator = "uuid4")
-    @GenericGenerator(name = "uuid4", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id_source")
     private UUID id;
 
@@ -26,7 +24,4 @@ public class Source extends SoftDeletableEntity {
     private String name;
 
     private String url;
-
-    @NotNull
-    private Boolean addedByAdmin = true;
 }

@@ -1,4 +1,4 @@
-package cz.mendelu.pef.xchatrny.tolkienapi.config;
+package cz.mendelu.pef.xchatrny.tolkienapi.common.config;
 
 
 import io.swagger.v3.oas.models.OpenAPI;
