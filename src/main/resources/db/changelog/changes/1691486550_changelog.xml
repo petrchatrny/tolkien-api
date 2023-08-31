@@ -5,16 +5,17 @@
                    https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
 
     <changeSet id="3" author="Petr Chatrný">
+        <!-- primary key data types -->
         <dropForeignKeyConstraint baseTableName="word" constraintName="word_language_FK"/>
         <dropForeignKeyConstraint baseTableName="word" constraintName="word_source_FK"/>
 
-        <modifyDataType tableName="language" columnName="id_language" newDataType="binary(16)"/>
-        <modifyDataType tableName="source" columnName="id_source" newDataType="binary(16)"/>
+        <modifyDataType tableName="language" columnName="id_language" newDataType="${uuid_type}"/>
+        <modifyDataType tableName="source" columnName="id_source" newDataType="${uuid_type}"/>
 
 
-        <modifyDataType tableName="word" columnName="id_word" newDataType="binary(16)"/>
-        <modifyDataType tableName="word" columnName="id_language" newDataType="binary(16)"/>
-        <modifyDataType tableName="word" columnName="id_source" newDataType="binary(16)"/>
+        <modifyDataType tableName="word" columnName="id_word" newDataType="${uuid_type}"/>
+        <modifyDataType tableName="word" columnName="id_language" newDataType="${uuid_type}"/>
+        <modifyDataType tableName="word" columnName="id_source" newDataType="${uuid_type}"/>
 
         <addForeignKeyConstraint baseTableName="word" baseColumnNames="id_language" constraintName="word_language_FK"
                                  referencedTableName="language" referencedColumnNames="id_language"/>
