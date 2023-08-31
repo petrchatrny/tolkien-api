@@ -1,7 +1,5 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDto;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.Word;
 import org.mapstruct.Mapper;
 
@@ -13,5 +11,5 @@ public interface WordMapper {
 
     WordDto.Response toResponseDto(Word word);
 
-    List<SourceDto.Response> toResponseListDto(List<Source> languages);
+    List<WordDto.Response> toResponseListDto(List<Word> words);
 }

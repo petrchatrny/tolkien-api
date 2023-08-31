@@ -1,9 +1,13 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.word;
 
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.Language;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.LanguageRepository;
+import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.SourceRepository;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto.WordDto;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto.WordMapper;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -31,28 +35,73 @@ public class WordServiceImpl implements WordService {
 
     @Override
     public List<WordDto.Response> findAll() {
-        // TODO
-        return null;
+        List<Word> words = wordRepository.findAll();
+        return wordMapper.toResponseListDto(words);
     }
 
     @Override
     public WordDto.Response findById(UUID id) {
-        // TODO
-        return null;
+        Word word = wordRepository.findById(id);
+        return wordMapper.toResponseDto(word);
     }
 
+    @Transactional
     @Override
     public WordDto.Response create(WordDto.Create dto) {
-        // TODO
-        return null;
+        Language language = languageRepository.findById(dto.getLanguageId());
+        if (language == null) {
+            throw new EntityNotFoundException();
+        }
+
+        Source source = null;
+        if (dto.getSourceId() != null) {
+            source = sourceRepository.findById(dto.getSourceId());
+
+            if (source == null) {
+                throw new EntityNotFoundException();
+            }
+        }
+
+        Word word = Word.builder()
+                        .czechMeaning(dto.getCzechMeaning())
+                        .translation(dto.getTranslation())
+                        .tengwar(dto.getTengwar())
+                        .language(language)
+                        .source(source)
+                        .build();
+
+        wordRepository.create(word);
+
+        return wordMapper.toResponseDto(word);
     }
 
+    @Transactional
     @Override
     public WordDto.Response update(UUID id, WordDto.Update dto) {
-        // TODO
-        return null;
+        Word word = wordRepository.findById(id);
+        Language language = languageRepository.findById(dto.getLanguageId());
+        if (language == null || word == null) {
+            throw new EntityNotFoundException();
+        }
+
+        Source source = null;
+        if (dto.getSourceId() != null) {
+            source = sourceRepository.findById(dto.getSourceId());
+            if (source == null) {
+                throw new EntityNotFoundException();
+            }
+        }
+
+        word.setCzechMeaning(dto.getCzechMeaning());
+        word.setTranslation(dto.getTranslation());
+        word.setTengwar(dto.getTengwar());
+        word.setLanguage(language);
+        word.setSource(source);
+
+        return wordMapper.toResponseDto(word);
     }
 
+    @Transactional
     @Override
     public void delete(UUID id) {
         wordRepository.delete(id);
