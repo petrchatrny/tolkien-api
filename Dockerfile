@@ -5,7 +5,7 @@ FROM gradle:7.5.0-jdk18 AS build
 WORKDIR /gradle
 
 COPY . .
-RUN gradle clean build -x test
+RUN gradle build -x test
 
 #
 # Run stage
