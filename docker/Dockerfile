@@ -4,7 +4,7 @@
 FROM gradle:7.5.0-jdk18 AS build
 WORKDIR /gradle
 
-COPY . .
+COPY .. .
 RUN gradle build -x test
 
 #
@@ -19,6 +19,6 @@ ENV DB_URL=""
 ENV DB_USERNAME=""
 ENV DB_PASSWORD=""
 
-COPY --from=build /gradle/build/libs/app.jar app.jar
+COPY --from=build /gradle/build/libs/app*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", "app.jar"]

@@ -1,0 +1,19 @@
+version: "3.7"
+services:
+
+  backend:
+    environment:
+      PROFILE: dev
+
+  database_fe:
+    container_name: tolkien_database_fe
+    image: phpmyadmin:latest
+    environment:
+      PMA_HOST: database
+      PMA_PORT: 3306
+      MYSQL_ROOT_PASSWORD: changeme
+    restart: always
+    ports:
+      - "8081:80"
+    networks:
+      - backend

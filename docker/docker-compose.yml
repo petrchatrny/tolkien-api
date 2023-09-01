@@ -2,12 +2,12 @@ version: "3.7"
 services:
 
   backend:
-    container_name: backend
+    container_name: tolkien_backend
     depends_on:
       - database
     build:
-      context: '.'
-      dockerfile: Dockerfile
+      context: '..'
+      dockerfile: docker/Dockerfile
     environment:
       DB_URL: jdbc:mariadb://database:3306/tolkien_api
       DB_USERNAME: api
@@ -20,7 +20,7 @@ services:
       - "8080:80"
 
   database:
-    container_name: database
+    container_name: tolkien_database
     image: mariadb:10.4
     environment:
       MYSQL_DATABASE: tolkien_api
@@ -32,19 +32,6 @@ services:
       - backend
     volumes:
       - database_volume:/var/lib/mariadb
-
-  database_fe:
-    container_name: database_fe
-    image: phpmyadmin:latest
-    environment:
-      PMA_HOST: database
-      PMA_PORT: 3306
-      MYSQL_ROOT_PASSWORD: changeme
-    restart: always
-    ports:
-      - "8081:80"
-    networks:
-      - backend
 
 networks:
   backend:

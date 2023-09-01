@@ -1,0 +1,12 @@
+version: "3.7"
+services:
+
+  backend:
+    environment:
+      PROFILE: prod
+
+networks:
+  backend:
+
+volumes:
+  database_volume:

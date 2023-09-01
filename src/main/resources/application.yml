@@ -1,6 +1,8 @@
 spring:
   banner:
     location: banner.txt
+  profiles:
+    active: ${PROFILE:dev}
   config:
     import: optional:.env[.properties]
   jpa:
@@ -23,12 +25,6 @@ server:
   port: ${PORT:80}
   servlet:
     context-path: /api
-
-logging:
-  level:
-    root: warn
-    web: debug
-    sql: error
 
 springdoc:
   api-docs:

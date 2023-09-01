@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'cz.mendelu.pef.xchatrny'
-//version = '0.0.1-SNAPSHOT'
+version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 archivesBaseName = 'app'
 
@@ -35,6 +35,7 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
     runtimeOnly 'org.postgresql:postgresql'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
     annotationProcessor 'org.projectlombok:lombok'
     annotationProcessor "org.mapstruct:mapstruct-processor:1.5.5.Final"
