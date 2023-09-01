@@ -1,11 +1,11 @@
 #
 # Build stage
 #
-FROM gradle:7.5.0-jdk18 AS build
+FROM eclipse-temurin:18-alpine AS build
 WORKDIR /gradle
 
 COPY .. .
-RUN gradle build -x test
+RUN ./gradlew build -x test --no-daemon --parallel
 
 #
 # Run stage
