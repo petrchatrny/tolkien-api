@@ -1,4 +1,4 @@
-package cz.mendelu.pef.xchatrny.tolkienapi.feature.word.dto;
+package cz.mendelu.pef.xchatrny.tolkienapi.feature.word;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;

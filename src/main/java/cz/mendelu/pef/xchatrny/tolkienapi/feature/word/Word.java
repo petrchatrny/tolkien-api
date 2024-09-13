@@ -1,25 +1,24 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.word;
 
+import cz.mendelu.pef.xchatrny.tolkienapi.common.architecture.BaseEntity;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.Language;
 import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.Source;
-import cz.mendelu.pef.xchatrny.tolkienapi.shared.model.SoftDeletableEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.UUID;
 
-@Builder
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "word")
-public class Word extends SoftDeletableEntity {
+public class Word extends BaseEntity<UUID> {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id_word")
     private UUID id;
 
     @NotNull

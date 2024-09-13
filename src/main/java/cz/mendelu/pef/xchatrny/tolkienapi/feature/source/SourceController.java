@@ -1,6 +1,5 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.source;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -14,16 +13,17 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/v1/sources")
 public class SourceController {
-    private final SourceServiceImpl service;
 
-    public SourceController(SourceServiceImpl service) {
+    private final SourceService service;
+
+    public SourceController(SourceService service) {
         this.service = service;
     }
 
     @GetMapping("/")
     @Operation(summary = "Get list of all sources")
     List<SourceDto.Response> getSources() {
-        return service.findAll();
+        return service.getAll();
     }
 
     @PostMapping("/")
@@ -36,7 +36,7 @@ public class SourceController {
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.ACCEPTED)
     @Operation(summary = "Update existing source by its id")
-    SourceDto.Response updateSource(@PathVariable UUID id, @RequestBody @Valid  SourceDto.Update dto) {
+    SourceDto.Response updateSource(@PathVariable UUID id, @RequestBody @Valid SourceDto.Update dto) {
         return service.update(id, dto);
     }
 

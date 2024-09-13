@@ -1,7 +1,5 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.DictionaryDto;
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.dictionary.dto.SyncDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -28,7 +26,7 @@ public class DictionaryController {
 
     @GetMapping("/sync")
     @Operation(summary = "Synchronize dictionaries")
-    SyncDto sync(@RequestParam @Parameter(description = "unix time in millis") Long lastSync) {
+    DictionaryDto.Sync sync(@RequestParam @Parameter(description = "unix time in millis") Long lastSync) {
         return service.sync(lastSync);
     }
 }

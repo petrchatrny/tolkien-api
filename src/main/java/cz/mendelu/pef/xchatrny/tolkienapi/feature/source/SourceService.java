@@ -1,12 +1,17 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.source;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.source.dto.SourceDto;
-import cz.mendelu.pef.xchatrny.tolkienapi.shared.service.CrudService;
-import cz.mendelu.pef.xchatrny.tolkienapi.shared.service.SyncService;
+import cz.mendelu.pef.xchatrny.tolkienapi.common.architecture.BaseService;
+import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
-public interface SourceService extends
-        CrudService<UUID, SourceDto.Create, SourceDto.Update, SourceDto.Response>,
-        SyncService<Source> {
+@Service
+public class SourceService extends BaseService<
+        UUID,
+        Source,
+        SourceDto.Create,
+        SourceDto.Update,
+        SourceDto.Response,
+        SourceRepository,
+        SourceMapper> {
 }

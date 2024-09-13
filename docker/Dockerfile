@@ -5,7 +5,7 @@ FROM eclipse-temurin:18-alpine AS build
 WORKDIR /gradle
 
 COPY .. .
-RUN ./gradlew build -x test --no-daemon --parallel
+RUN ./gradlew clean build -x test --no-daemon --parallel
 
 #
 # Run stage
@@ -14,6 +14,8 @@ FROM openjdk:18-jdk AS run
 WORKDIR /app
 EXPOSE 80
 
+ENV PORT=""
+ENV PROFILE=""
 ENV DB_DRIVER=""
 ENV DB_URL=""
 ENV DB_USERNAME=""

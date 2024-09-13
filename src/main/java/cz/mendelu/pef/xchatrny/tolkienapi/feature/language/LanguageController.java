@@ -1,35 +1,33 @@
 package cz.mendelu.pef.xchatrny.tolkienapi.feature.language;
 
-import cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto.LanguageDto;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "languages")
+@Tag(name = "Languages")
 @RestController
-@RequestMapping("/v1/languages")
-public final class LanguageController {
-    private final LanguageService service;
+@RequestMapping("/languages")
+@RequiredArgsConstructor
+public class LanguageController {
 
-    public LanguageController(LanguageService service) {
-        this.service = service;
-    }
+    private final LanguageService service;
 
     @GetMapping("/")
     @Operation(summary = "Get list of all languages")
     List<LanguageDto.Response> getLanguages() {
-        return service.findAll();
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
     @Operation(summary = "Get one language by its id")
     LanguageDto.Response getLanguageById(@PathVariable UUID id) {
-        return service.findById(id);
+        return service.get(id);
     }
 
     @PostMapping("/")

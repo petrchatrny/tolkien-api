@@ -1,4 +1,4 @@
-package cz.mendelu.pef.xchatrny.tolkienapi.feature.language.dto;
+package cz.mendelu.pef.xchatrny.tolkienapi.feature.language;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;

@@ -1,16 +1,21 @@
-package cz.mendelu.pef.xchatrny.tolkienapi.shared.model;
+package cz.mendelu.pef.xchatrny.tolkienapi.common.architecture;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
-@MappedSuperclass
 @Getter
 @Setter
-public abstract class SoftDeletableEntity {
+@MappedSuperclass
+public abstract class BaseEntity<ID extends Serializable> {
+
+    @Id
+    private ID id;
+
     @Column(updatable = false)
     @NotNull
     private LocalDateTime createdAt;
