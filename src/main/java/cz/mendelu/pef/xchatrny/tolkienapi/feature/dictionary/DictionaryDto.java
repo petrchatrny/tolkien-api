@@ -11,13 +11,13 @@ import lombok.Setter;
 import java.util.List;
 import java.util.UUID;
 
-public class DictionaryDto {
+public final class DictionaryDto {
 
     @Getter
     @Setter
     @AllArgsConstructor
     @Schema(name = "DictionaryDtoEntities")
-    public static class Entities {
+    public static final class Entities {
         private List<WordDto.Response> words;
         private List<LanguageDto.Response> languages;
         private List<SourceDto.Response> sources;
@@ -27,7 +27,7 @@ public class DictionaryDto {
     @Setter
     @AllArgsConstructor
     @Schema(name = "DictionaryDtoReferences")
-    public static class References {
+    public static final class References {
         private List<UUID> words;
         private List<UUID> languages;
         private List<UUID> sources;
@@ -37,7 +37,7 @@ public class DictionaryDto {
     @Setter
     @AllArgsConstructor
     @Schema(name = "DictionaryDtoSync")
-    public static class Sync {
+    public static final class Sync {
         private DictionaryDto.Entities created;
         private DictionaryDto.Entities updated;
         private DictionaryDto.References deleted;

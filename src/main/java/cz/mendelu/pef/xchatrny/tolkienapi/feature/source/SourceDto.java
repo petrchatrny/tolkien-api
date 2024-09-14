@@ -8,10 +8,11 @@ import lombok.Setter;
 import java.util.UUID;
 
 public final class SourceDto {
+
     @Getter
     @Setter
     @Schema(name = "SourceDtoCreate")
-    public static class Create {
+    public static final class Create {
         @Schema(example = "angrenost", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotBlank(message = "name is mandatory")
         private String name;
@@ -22,7 +23,8 @@ public final class SourceDto {
 
     @Getter
     @Setter
-    public static class Update {
+    @Schema(name = "SourceDtoUpdate")
+    public static final class Update {
         @Schema(example = "angrenost", requiredMode = Schema.RequiredMode.REQUIRED)
         @NotBlank(message = "name is mandatory")
         private String name;
@@ -33,7 +35,8 @@ public final class SourceDto {
 
     @Getter
     @Setter
-    public static class Response {
+    @Schema(name = "SourceDtoResponse")
+    public static final class Response {
         private UUID id;
         private String name;
         private String url;
