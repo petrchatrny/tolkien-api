@@ -56,5 +56,8 @@ public final class WordDto {
         private String translation;
         private String tengwar;
         private LocalDateTime createdAt;
+        private LocalDateTime updatedAt;
+        private UUID languageId;
+        private UUID sourceId;
     }
 }
