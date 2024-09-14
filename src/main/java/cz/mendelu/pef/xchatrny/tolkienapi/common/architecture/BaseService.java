@@ -21,15 +21,6 @@ public abstract class BaseService<
     protected REPOSITORY repository;
     protected MAPPER mapper;
 
-    protected void preCreate(CREATE dto) {
-    }
-
-    protected void preUpdate(UPDATE update) {
-    }
-
-    protected void preDelete() {
-    }
-
     public RESPONSE get(ID id) {
         ENTITY entity = repository.findById(id);
         if (entity == null) {
@@ -46,7 +37,6 @@ public abstract class BaseService<
 
     @Transactional
     public RESPONSE create(CREATE dto) {
-        preCreate(dto);
         ENTITY toCreate = mapper.fromCreate(dto);
         ENTITY created = repository.create(toCreate);
         return mapper.toResponse(created);
