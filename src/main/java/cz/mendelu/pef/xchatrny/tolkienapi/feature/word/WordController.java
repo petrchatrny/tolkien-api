@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "words")
+@Tag(name = "Words")
 @RestController
-@RequestMapping("/v1/words")
+@RequestMapping("/word")
 @RequiredArgsConstructor
 public class WordController {
 
     private final WordService service;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(summary = "Get list of words")
     public List<WordDto.Response> getWords() {
         return service.getAll();
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new word")
     public WordDto.Response createWord(@RequestBody @Valid WordDto.Create dto) {

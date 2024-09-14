@@ -12,13 +12,13 @@ import java.util.UUID;
 
 @Tag(name = "Languages")
 @RestController
-@RequestMapping("/languages")
+@RequestMapping("/language")
 @RequiredArgsConstructor
 public class LanguageController {
 
     private final LanguageService service;
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(summary = "Get list of all languages")
     List<LanguageDto.Response> getLanguages() {
         return service.getAll();
@@ -30,7 +30,7 @@ public class LanguageController {
         return service.get(id);
     }
 
-    @PostMapping("/")
+    @PostMapping
     @Operation(summary = "Create new language")
     @ResponseStatus(HttpStatus.CREATED)
     LanguageDto.Response createLanguage(@Valid @RequestBody LanguageDto.Create dto) {

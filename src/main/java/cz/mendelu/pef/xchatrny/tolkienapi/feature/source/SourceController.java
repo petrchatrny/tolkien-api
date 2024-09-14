@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.UUID;
 
-@Tag(name = "sources")
+@Tag(name = "Sources")
 @RestController
-@RequestMapping("/v1/sources")
+@RequestMapping("/source")
 public class SourceController {
 
     private final SourceService service;
@@ -20,13 +20,13 @@ public class SourceController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(summary = "Get list of all sources")
     List<SourceDto.Response> getSources() {
         return service.getAll();
     }
 
-    @PostMapping("/")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(summary = "Create new source")
     SourceDto.Response createSource(@RequestBody @Valid SourceDto.Create dto) {
