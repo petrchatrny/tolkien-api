@@ -28,9 +28,9 @@ server:
 
 springdoc:
   api-docs:
-    path: /api-docs
+    path: /openapi
   swagger-ui:
-    path: /
+    path: /swagger
     tags-sorter: alpha
     operations-sorter: alpha
     persist-authorization: true

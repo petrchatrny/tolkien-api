@@ -3,6 +3,7 @@ package cz.procyon.tolkiendict.api.feature.source;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,13 +13,10 @@ import java.util.UUID;
 @Tag(name = "Sources")
 @RestController
 @RequestMapping("/source")
+@RequiredArgsConstructor
 public class SourceController {
 
     private final SourceService service;
-
-    public SourceController(SourceService service) {
-        this.service = service;
-    }
 
     @GetMapping
     @Operation(summary = "Get list of all sources")
