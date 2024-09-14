@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Tag(name = "dictionaries")
 @RestController
-@RequestMapping("/v1/dictionaries")
+@RequestMapping("/dictionary")
 public class DictionaryController {
     private final DictionaryService service;
 
@@ -18,7 +18,7 @@ public class DictionaryController {
         this.service = service;
     }
 
-    @GetMapping("/")
+    @GetMapping
     @Operation(summary = "Download dictionaries")
     DictionaryDto.Entities download() {
         return service.download();
