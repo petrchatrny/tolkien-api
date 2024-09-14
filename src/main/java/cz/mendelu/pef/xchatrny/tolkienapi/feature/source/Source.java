@@ -12,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "td_source")
 public class Source extends BaseEntity<UUID> {
 
     @Id

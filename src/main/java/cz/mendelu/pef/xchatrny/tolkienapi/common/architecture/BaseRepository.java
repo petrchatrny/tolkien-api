@@ -52,7 +52,7 @@ public abstract class BaseRepository<ID extends Serializable, ENTITY extends Bas
         String jpql = "SELECT e FROM " + entityClass.getSimpleName() + " e ";
 
         if (!includeDeleted) {
-            jpql += "WHERE e.deletedAt is NULL ";
+            jpql += "WHERE e.deletedAt IS NULL ";
         }
 
         TypedQuery<ENTITY> query = entityManager.createQuery(jpql, entityClass);
@@ -154,7 +154,7 @@ public abstract class BaseRepository<ID extends Serializable, ENTITY extends Bas
                       "FROM " + entityClass.getSimpleName() + " e " +
                       "WHERE e.updatedAt > :targetDate " +
                       "  AND e.updatedAt != e.createdAt " +
-                      "  AND e.deletedAt is NULL ";
+                      "  AND e.deletedAt IS NULL ";
 
         TypedQuery<ENTITY> query = entityManager.createQuery(jpql, entityClass);
         query.setParameter("targetDate", dateTime);

@@ -14,7 +14,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "word")
+@Table(name = "td_word")
 public class Word extends BaseEntity<UUID> {
 
     @Id

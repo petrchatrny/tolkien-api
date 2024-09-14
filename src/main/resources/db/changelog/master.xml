@@ -11,6 +11,6 @@
     <property name="uuid_type" value="binary(16)" dbms="mariadb"/>
     <property name="uuid_type" value="uuid" dbms="postgresql"/>
 
-    <includeAll path="/db/changelog/changes/"/>
+    <includeAll path="/db/changelog/changes"/>
 
 </databaseChangeLog>

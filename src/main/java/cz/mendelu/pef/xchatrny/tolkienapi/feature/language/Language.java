@@ -12,6 +12,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Table(name = "td_language")
 public class Language extends BaseEntity<UUID> {
 
     @Id
